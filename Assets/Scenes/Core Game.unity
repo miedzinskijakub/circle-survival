@@ -155,7 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 7651824748776715412, guid: 5ff56dff11c4e004c983652bfb82f92c, type: 3}
   bombPrefab: {fileID: 7651824748776715412, guid: f3d9f2679fce3d0419ece32d75008d29, type: 3}
-  radius: 50
+  buffer: 50
+  radius: 1
   mask:
     serializedVersion: 2
     m_Bits: 8

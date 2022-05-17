@@ -8,6 +8,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject ballPrefab;
     [SerializeField] GameObject bombPrefab;
 
+    [Header("Bounds buffer")]
+    [SerializeField] float buffer = 50f;
+
     [Header("Collider settings")]
     [SerializeField] float radius;
     [SerializeField] LayerMask mask;
@@ -53,9 +56,8 @@ public class Spawner : MonoBehaviour
 
     }
 
-    private static Vector2 CalculateBounds()
+    private Vector2 CalculateBounds()
     {
-        float buffer = 20f;
         Vector3 worldMin = Camera.main.ScreenToWorldPoint(new Vector2(buffer, buffer));
         Vector3 worldMax = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width - buffer, Screen.height - buffer));
         Vector2 spawnPos = new Vector2(
