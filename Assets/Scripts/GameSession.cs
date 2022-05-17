@@ -31,6 +31,8 @@ public class GameSession : MonoBehaviour
 
 	private void Start()
 	{
+		Time.timeScale = 1;
+
 		spawner = spawner.GetComponent<Spawner>();
 
 		savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
