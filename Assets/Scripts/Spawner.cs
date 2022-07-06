@@ -72,7 +72,7 @@ public class Spawner : MonoBehaviour
         {
             SpawnRandom();
            
-            yield return new WaitForSeconds(difficult.generateDifficult());
+            yield return new WaitForSeconds(difficult.GenerateDifficult());
 
         }
     }

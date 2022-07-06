@@ -8,11 +8,13 @@ public class DifficultScript : MonoBehaviour
     [Tooltip("The lower the value, the harder it is.")]
     [Range(1f, 50f)][SerializeField] float difficultFactor = 1f;
     
-    public float generateDifficult()
+    public float GenerateDifficult()
     {
-        float number;
-        number = Mathf.Sqrt(difficultFactor / Time.time);
-        
+        float number = 1;
+
+        //number = Mathf.Sqrt(difficultFactor * Time.time);
+        number -= Time.time / 100;
+        Debug.Log(number);
         return number;
 
     }

@@ -1,38 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Circleq;
 
-public class Circle : MonoBehaviour
+public class Circle : Circles, IDestroyable
 {
-    [SerializeField] float minTime;
-    [SerializeField] float maxTime;
-    float timeLeft;
-
-    GameSession gameSession;
-    
-
+   // [SerializeField] float minTime;
+   // [SerializeField] float maxTime;
+   // float timeLeft;
 
     void Start()
     {
-      
-        timeLeft = Random.Range(minTime, maxTime);
-        gameSession = FindObjectOfType<GameSession>();
 
+
+       // SetTime();
       
     }
 
-    void Update()
-    {
-        
-        timeLeft -= Time.deltaTime;
-        if(timeLeft < 0)
-        {
+   // void Update()
+    //{
+      //  DestroyByTime();
 
-            gameSession.GameOver();
+   // }
+    /*
+    private void DestroyByTime()
+    {
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0)
+        {
+            //gameSession.GameOver();
             Destroy(gameObject);
         }
-        
+    }*/
+
+    private void DestroyByTap()
+    {
+        Destroy(gameObject);
     }
 
-   
+    public override void SetTime()
+    {
+        timeLeft = Random.Range(minTime, maxTime);
+
+    }
+
+    public void Interact()
+    {
+        DestroyByTap();
+    }
 }
