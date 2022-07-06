@@ -5,47 +5,33 @@ using Circleq;
 
 public class Circle : Circles, IDestroyable
 {
-   // [SerializeField] float minTime;
-   // [SerializeField] float maxTime;
-   // float timeLeft;
+    /*
+     [SerializeField] float minTime;
+    [SerializeField] float maxTime;
 
-    void Start()
+    void Update()
+   {
+     DestroyByTime();
+
+    }
+   public override void SetTime()
+   {
+       timeLeft = Random.Range(minTime, maxTime);
+
+   }
+   */
+    protected override void OnTimeOut()
     {
-
-
-       // SetTime();
-      
+        gameSession.GameOver();
     }
 
-   // void Update()
-    //{
-      //  DestroyByTime();
-
-   // }
-    /*
-    private void DestroyByTime()
-    {
-        timeLeft -= Time.deltaTime;
-        if (timeLeft < 0)
-        {
-            //gameSession.GameOver();
-            Destroy(gameObject);
-        }
-    }*/
-
-    private void DestroyByTap()
+    public override void Logic()
     {
         Destroy(gameObject);
     }
 
-    public override void SetTime()
-    {
-        timeLeft = Random.Range(minTime, maxTime);
-
-    }
-
     public void Interact()
     {
-        DestroyByTap();
+        Logic();
     }
 }

@@ -14,7 +14,7 @@ public class DifficultScript : MonoBehaviour
 
         //number = Mathf.Sqrt(difficultFactor * Time.time);
         number -= Time.time / 100;
-        Debug.Log(number);
+        //Debug.Log(number);
         return number;
 
     }

@@ -32,10 +32,12 @@ public class DestroyCircles : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
 
+            
 
             if (hit.collider != null && hit.transform.tag == "circle")
             {
                 var interactable = hit.transform.gameObject.GetComponent<IDestroyable>();
+
                 if (interactable == null) return;
 
                 interactable.Interact();
@@ -49,14 +51,20 @@ public class DestroyCircles : MonoBehaviour
 
             else if(hit.collider != null && hit.transform.tag == "bomb")
             {
+                var interactable = hit.transform.gameObject.GetComponent<IDestroyable>();
+
+                if (interactable == null) return;
+
+                interactable.Interact();
                 PlaySound(bombExplodeSound, hit);
-                gameSession.GameOver();
+               // gameSession.GameOver();
                 Destroy(hit.collider.gameObject);
                 
             }
 
             else if(hit.collider == null && hasStarted == false)
             {
+           
                 hasStarted = true;
                 gameSession.StartGame();                
                         

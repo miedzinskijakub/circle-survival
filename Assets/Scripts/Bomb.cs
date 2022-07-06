@@ -1,30 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Circleq;
 
-public class Bomb : MonoBehaviour
+public class Bomb : Circles, IDestroyable
 {
-  
-    float timeLeft;
-    
-    void Start()
+    public void Interact()
     {
-       
-        timeLeft = 3f;
-
-  
+        Logic();
     }
 
-    void Update()
+    public override void Logic()
     {
-
-        timeLeft -= Time.deltaTime;
-
-        if(timeLeft < 0)
-        {
-            Destroy(gameObject);
-        }
-        
+        gameSession.GameOver();
     }
 
 }
