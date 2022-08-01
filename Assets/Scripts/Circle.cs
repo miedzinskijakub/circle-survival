@@ -25,6 +25,7 @@ public class Circle : Circles, IDestroyable
         gameSession.GameOver();
     }
 
+
     public override void Logic()
     {
         Destroy(gameObject);
