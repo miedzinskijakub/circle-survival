@@ -14,5 +14,4 @@ public class Bomb : Circles, IDestroyable
     {
         gameSession.GameOver();
     }
-
 }

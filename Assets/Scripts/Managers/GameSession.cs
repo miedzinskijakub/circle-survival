@@ -3,115 +3,121 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+
 public class GameSession : MonoBehaviour
 {
-	[Header("UI objects")]
-	[SerializeField] TextMeshProUGUI currentScoreText;
-	[SerializeField] TextMeshProUGUI scoreMenu;
-	[SerializeField] TextMeshProUGUI timerText;
-	[SerializeField] TextMeshProUGUI storedHighScore;
-	[SerializeField] GameObject newHighScoreText;
-	[SerializeField] GameObject scoreTextWindow;
-	[SerializeField] GameObject gameOverContainer;
-	[SerializeField] GameObject tapToStart;
-	[SerializeField] GameObject scoreAndTimerContainer;
-	[SerializeField] Canvas parentCanvas;
+    [Header("UI objects")]
+    [SerializeField]
+    TextMeshProUGUI currentScoreText;
 
-	[Header("Script reference")]
-	[SerializeField] Spawner spawner;
+    [SerializeField]
+    TextMeshProUGUI scoreMenu;
 
+    [SerializeField]
+    TextMeshProUGUI timerText;
 
-	int currentScore = 0;
-	int savedHighScore = 0;
-	bool gameStarted = false;
-	float timer = 0;
+    [SerializeField]
+    TextMeshProUGUI storedHighScore;
 
-	
-	Coroutine spawnCorutine = null;
+    [SerializeField]
+    GameObject newHighScoreText;
 
-	private void Start()
-	{
-		Time.timeScale = 1;
+    [SerializeField]
+    GameObject scoreTextWindow;
 
-		spawner = spawner.GetComponent<Spawner>();
+    [SerializeField]
+    GameObject gameOverContainer;
 
-		savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
-		timerText.text = string.Format("{0:00}:{1:00}", 0, 0);
-		currentScoreText.text = currentScore.ToString();
-		
-	}
-	void Update()
-	{
-		
-		if(gameStarted == true)
+    [SerializeField]
+    GameObject tapToStart;
+
+    [SerializeField]
+    GameObject scoreAndTimerContainer;
+
+    [SerializeField]
+    Canvas parentCanvas;
+
+    [Header("Script reference")]
+    [SerializeField]
+    Spawner spawner;
+
+    private int currentScore = 0;
+    private int savedHighScore = 0;
+    private bool gameStarted = false;
+    private float timer = 0;
+
+    Coroutine spawnCorutine = null;
+
+    private void Start()
+    {
+        Time.timeScale = 1;
+
+        spawner = spawner.GetComponent<Spawner>();
+
+        savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
+        timerText.text = string.Format("{0:00}:{1:00}", 0, 0);
+        currentScoreText.text = currentScore.ToString();
+    }
+
+    void Update()
+    {
+        if (gameStarted == true)
         {
-			currentScoreText.text = currentScore.ToString();
-			timer += Time.deltaTime;
+            currentScoreText.text = currentScore.ToString();
+            timer += Time.deltaTime;
 
-			float seconds = Mathf.Floor(timer % 60);
-			float minutes = Mathf.FloorToInt(timer / 60);
+            float seconds = Mathf.Floor(timer % 60);
+            float minutes = Mathf.FloorToInt(timer / 60);
 
-			timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
+    }
 
-	}
-
-	public void AddToScore()
-	{
-		currentScore++;
-		currentScoreText.text = currentScore.ToString();
-	}
-
-	public void GameOver()
+    public void AddToScore()
     {
-		Time.timeScale = 0;
-		gameStarted = false;
-		StopCoroutine(spawnCorutine);
+        currentScore++;
+        currentScoreText.text = currentScore.ToString();
+    }
 
-		parentCanvas.sortingOrder = 10;
-		gameOverContainer.SetActive(true);
-		scoreAndTimerContainer.SetActive(false);
-		scoreMenu.text = currentScore.ToString();
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        gameStarted = false;
+        StopCoroutine(spawnCorutine);
 
+        parentCanvas.sortingOrder = 10;
+        gameOverContainer.SetActive(true);
+        scoreAndTimerContainer.SetActive(false);
+        scoreMenu.text = currentScore.ToString();
 
-
-		if (currentScore > savedHighScore)
+        if (currentScore > savedHighScore)
         {
-			PlayerPrefs.SetInt("HighScore", currentScore);
-			newHighScoreText.SetActive(true);
-			storedHighScore.gameObject.SetActive(false);
-			scoreTextWindow.SetActive(false);
-			
-
-		}
-		else
-        {
-			storedHighScore.gameObject.SetActive(true);
-			storedHighScore.text = $"High Score: {PlayerPrefs.GetInt("HighScore")}";
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            newHighScoreText.SetActive(true);
+            storedHighScore.gameObject.SetActive(false);
+            scoreTextWindow.SetActive(false);
         }
-	}
+        else
+        {
+            storedHighScore.gameObject.SetActive(true);
+            storedHighScore.text = $"High Score: {PlayerPrefs.GetInt("HighScore")}";
+        }
+    }
 
-	public void StartGame()
+    public void StartGame()
     {
-		Time.timeScale = 1;
-		gameStarted = true;
+        Time.timeScale = 1;
+        gameStarted = true;
 
-		tapToStart.SetActive(false);
-		scoreAndTimerContainer.SetActive(true);
+        tapToStart.SetActive(false);
+        scoreAndTimerContainer.SetActive(true);
 
-		spawnCorutine = StartCoroutine(spawner.SpawnCircles());
-	}
-	public void ResetScene()
+        spawnCorutine = StartCoroutine(spawner.SpawnCircles());
+    }
+
+    public void ResetScene()
     {
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		StartGame();
-	}
-
-
-
-	
-
-
-	
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartGame();
+    }
 }
